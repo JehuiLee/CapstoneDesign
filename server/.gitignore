@@ -27,7 +27,7 @@ out/
 !**/src/test/**/out/
 
 # 배포용 프로퍼티 파일 무시
-application-deploy.properties
+/src/main/resources/application-deploy.properties
 
 ### NetBeans ###
 /nbproject/private/
