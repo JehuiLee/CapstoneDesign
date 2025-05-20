@@ -30,7 +30,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
         if (path.equals("/auth/refresh-token")) {
-            //refresh-token 요청은 필터 건너뜀
             filterChain.doFilter(request, response);
             return;
         }
@@ -40,7 +39,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         if (token != null && tokenProvider.validateToken(token)) {
             Long userId = tokenProvider.getUserIdFromToken(token);
 
-            //유저 조회
             UserEntity user = userRepository.findById(userId).orElse(null);
             if (user != null) {
                 UserPrincipal userPrincipal = UserPrincipal.create(user);
@@ -49,8 +47,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(
                                 userPrincipal, null, userPrincipal.getAuthorities());
 
-                authentication.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request));
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

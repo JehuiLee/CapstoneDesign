@@ -90,11 +90,8 @@ public class TokenProvider {
                     .getBody();
 
             String subject = claims.getSubject();
-            System.out.println("subject from token: " + subject);
-
             Long userId = Long.parseLong(subject);
             String newToken = createAccessToken(userId);
-            System.out.println("생성된 access token: " + newToken);
             return newToken;
         } catch (Exception e) {
             e.printStackTrace();

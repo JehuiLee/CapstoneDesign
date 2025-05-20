@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Component
@@ -42,6 +43,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
         //refreshToken DB에 저장
         user.setRefreshToken(refreshToken);
+        user.setLastLoginAt(LocalDateTime.now());
         userRepository.save(user);
 
         //JSON 응답으로 토큰 내려주기

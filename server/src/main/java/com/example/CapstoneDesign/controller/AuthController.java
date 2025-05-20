@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -23,7 +25,8 @@ public class AuthController {
 
         if (tokenProvider.validateRefreshToken(refreshToken)) {
             String newAccessToken = tokenProvider.refreshAccessToken(refreshToken);
-            return ResponseEntity.ok().body(newAccessToken);
+            return ResponseEntity.ok(Map.of("access_token", newAccessToken));
+
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Refresh Token");
         }
