@@ -1,4 +1,4 @@
-package com.example.CapstoneDesign.security;
+package com.example.CapstoneDesign.security.oauth2;
 
 import com.example.CapstoneDesign.entity.UserEntity;
 import lombok.Getter;

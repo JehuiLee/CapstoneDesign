@@ -1,16 +1,14 @@
 package com.example.CapstoneDesign.security.oauth2;
 
+import com.example.CapstoneDesign.security.oauth2.UserPrincipal;
 import com.example.CapstoneDesign.config.AppProperties;
-import com.example.CapstoneDesign.security.UserPrincipal;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
-
 
 @Component
 @RequiredArgsConstructor
