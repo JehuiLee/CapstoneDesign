@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UserResponseDto {
-    private Long id;
+    private String id;
     private String email;
     private String name;
     private boolean isRegistered;

@@ -17,7 +17,7 @@ public class UserController {
     @GetMapping("/me")
     public UserResponseDto getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         return UserResponseDto.builder()
-                .id(userPrincipal.getId())
+                .id(userPrincipal.getId().toString())
                 .email(userPrincipal.getEmail())
                 .name(userPrincipal.getName())
                 .isRegistered(true) // 필요시 DB에서 가져와도 됨

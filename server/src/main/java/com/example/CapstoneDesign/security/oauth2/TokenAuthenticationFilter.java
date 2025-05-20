@@ -28,6 +28,13 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+        if (path.equals("/auth/refresh-token")) {
+            //refresh-token 요청은 필터 건너뜀
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String token = getJwtFromRequest(request);
 
         if (token != null && tokenProvider.validateToken(token)) {

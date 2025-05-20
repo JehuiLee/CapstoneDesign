@@ -23,6 +23,7 @@ import java.util.Optional;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
+    private final TokenProvider tokenProvider;
 
     @Override
     @Transactional
@@ -50,6 +51,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         if (optionalUser.isPresent()) {
             user = optionalUser.get();
             user.setLastLoginAt(LocalDateTime.now());
+
+            // 테스트용: 새 refresh token 발급
+            String newRefreshToken = tokenProvider.createRefreshToken(user.getId());
+            user.setRefreshToken(newRefreshToken);
         } else {
             user = UserEntity.builder()
                     .kakaoId(kakaoId)

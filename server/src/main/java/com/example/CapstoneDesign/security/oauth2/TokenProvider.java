@@ -18,34 +18,6 @@ public class TokenProvider {
 
     private final AppProperties appProperties;
 
-    public String createAccessToken(Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
-
-        return Jwts.builder()
-                .setSubject(Long.toString(userPrincipal.getId()))
-                .setIssuedAt(now)
-                .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, appProperties.getAuth().getTokenSecret())
-                .compact();
-    }
-
-    public String createRefreshToken(Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getRefreshTokenExpirationMsec());
-
-        return Jwts.builder()
-                .setSubject(Long.toString(userPrincipal.getId()))
-                .setIssuedAt(now)
-                .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, appProperties.getAuth().getRefreshTokenSecret())
-                .compact();
-    }
-
     public String createAccessToken(Long userId) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
@@ -71,15 +43,18 @@ public class TokenProvider {
     }
     public boolean validateRefreshToken(String refreshToken) {
         try {
+            System.out.println("토큰 유효성 검증 시작");
             Jwts.parser()
                     .setSigningKey(appProperties.getAuth().getRefreshTokenSecret())
                     .parseClaimsJws(refreshToken);
+            System.out.println("리프레시 토큰 검증 성공");
             return true;
         } catch (JwtException ex) {
-            logger.warn("Invalid refresh token: {}", ex.getMessage());
+            System.err.println("리프레시 토큰 검증 실패: " + ex.getMessage());
             return false;
         }
     }
+
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
@@ -108,16 +83,23 @@ public class TokenProvider {
         return Long.parseLong(claims.getSubject());
     }
     public String refreshAccessToken(String refreshToken) {
-        if (validateRefreshToken(refreshToken)) {
+        try {
             Claims claims = Jwts.parser()
                     .setSigningKey(appProperties.getAuth().getRefreshTokenSecret())
                     .parseClaimsJws(refreshToken)
                     .getBody();
 
-            Long userId = Long.parseLong(claims.getSubject());
-            return createAccessToken(userId);
-        } else {
-            throw new RuntimeException("Invalid Refresh Token");
+            String subject = claims.getSubject();
+            System.out.println("subject from token: " + subject);
+
+            Long userId = Long.parseLong(subject);
+            String newToken = createAccessToken(userId);
+            System.out.println("생성된 access token: " + newToken);
+            return newToken;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
+
 }
