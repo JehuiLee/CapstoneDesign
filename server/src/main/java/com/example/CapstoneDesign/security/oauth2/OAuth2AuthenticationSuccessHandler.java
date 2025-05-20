@@ -28,7 +28,9 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
                                         Authentication authentication) throws IOException, ServletException {
 
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        String kakaoId = String.valueOf(oAuth2User.getAttribute("id"));
+        Object rawKakaoId = oAuth2User.getAttribute("id");
+
+        String kakaoId = rawKakaoId.toString();
 
         // 사용자 조회
         UserEntity user = userRepository.findByKakaoId(kakaoId)
