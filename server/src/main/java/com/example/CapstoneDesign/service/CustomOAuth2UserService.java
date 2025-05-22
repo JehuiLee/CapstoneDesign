@@ -1,8 +1,8 @@
-package com.example.CapstoneDesign.security.oauth2;
+package com.example.CapstoneDesign.service;
 
-import com.example.CapstoneDesign.dto.KakaoUserDto;
 import com.example.CapstoneDesign.entity.UserEntity;
 import com.example.CapstoneDesign.repository.UserRepository;
+import com.example.CapstoneDesign.security.oauth2.TokenProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

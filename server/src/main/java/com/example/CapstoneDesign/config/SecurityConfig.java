@@ -1,7 +1,7 @@
 package com.example.CapstoneDesign.config;
 
 import com.example.CapstoneDesign.security.oauth2.TokenAuthenticationFilter;
-import com.example.CapstoneDesign.security.oauth2.CustomOAuth2UserService;
+import com.example.CapstoneDesign.service.CustomOAuth2UserService;
 import com.example.CapstoneDesign.security.oauth2.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login**", "/oauth2/**", "/auth/**").permitAll()
                         .anyRequest().authenticated()
