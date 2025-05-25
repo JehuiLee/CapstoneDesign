@@ -1,12 +1,10 @@
 package com.example.CapstoneDesign.security.oauth2;
 
-import com.example.CapstoneDesign.security.oauth2.UserPrincipal;
 import com.example.CapstoneDesign.config.AppProperties;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import java.util.Date;
 
@@ -74,14 +72,16 @@ public class TokenProvider {
         }
         return false;
     }
-    public Long getUserIdFromToken(String token) {
+
+    public Long getUserIdFromRefreshToken(String refreshToken) {
         Claims claims = Jwts.parser()
-                .setSigningKey(appProperties.getAuth().getTokenSecret())
-                .parseClaimsJws(token)
+                .setSigningKey(appProperties.getAuth().getRefreshTokenSecret())
+                .parseClaimsJws(refreshToken)
                 .getBody();
 
         return Long.parseLong(claims.getSubject());
     }
+
     public String refreshAccessToken(String refreshToken) {
         try {
             Claims claims = Jwts.parser()

@@ -23,6 +23,4 @@ public class KakaoUserDto {
     public static class Profile {
         private String name;
     }
-
-
 }
