@@ -1,8 +1,6 @@
 package com.example.CapstoneDesign.config;
 
-import com.example.CapstoneDesign.repository.UserRepository;
 import com.example.CapstoneDesign.security.oauth2.TokenAuthenticationFilter;
-import com.example.CapstoneDesign.security.oauth2.TokenProvider;
 import com.example.CapstoneDesign.service.CustomOAuth2UserService;
 import com.example.CapstoneDesign.security.oauth2.OAuth2AuthenticationSuccessHandler;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,8 +23,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        System.out.println("✅ SecurityFilterChain 등록됨");
-
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
@@ -44,13 +40,6 @@ public class SecurityConfig {
                 .oauth2Login(oauth -> oauth
                         .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                         .successHandler(oAuth2AuthenticationSuccessHandler)
-                )
-                .exceptionHandling(auth -> auth
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.setContentType("application/json");
-                            response.getWriter().write("{\"error\": \"Unauthorized\"}");
-                        })
                 )
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

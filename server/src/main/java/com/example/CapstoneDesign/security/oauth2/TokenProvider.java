@@ -41,36 +41,13 @@ public class TokenProvider {
     }
     public boolean validateRefreshToken(String refreshToken) {
         try {
-            System.out.println("토큰 유효성 검증 시작");
             Jwts.parser()
                     .setSigningKey(appProperties.getAuth().getRefreshTokenSecret())
                     .parseClaimsJws(refreshToken);
-            System.out.println("리프레시 토큰 검증 성공");
             return true;
         } catch (JwtException ex) {
-            System.err.println("리프레시 토큰 검증 실패: " + ex.getMessage());
             return false;
         }
-    }
-
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parser()
-                    .setSigningKey(appProperties.getAuth().getTokenSecret())
-                    .parseClaimsJws(token);
-            return true;
-        } catch (SignatureException ex) {
-            logger.error("Invalid JWT signature");
-        } catch (MalformedJwtException ex) {
-            logger.error("Invalid JWT token");
-        } catch (ExpiredJwtException ex) {
-            logger.warn("Expired JWT token");
-        } catch (UnsupportedJwtException ex) {
-            logger.error("Unsupported JWT token");
-        } catch (IllegalArgumentException ex) {
-            logger.error("JWT claims string is empty.");
-        }
-        return false;
     }
 
     public Long getUserIdFromRefreshToken(String refreshToken) {
@@ -98,5 +75,4 @@ public class TokenProvider {
             return null;
         }
     }
-
 }
