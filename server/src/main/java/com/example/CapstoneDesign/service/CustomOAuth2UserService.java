@@ -1,4 +1,4 @@
-package com.example.CapstoneDesign.service;
+/*package com.example.CapstoneDesign.service;
 
 import com.example.CapstoneDesign.entity.UserEntity;
 import com.example.CapstoneDesign.repository.UserRepository;
@@ -75,4 +75,4 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 "id" // attributes에서 사용자 고유 식별자 키
         );
     }
-}
+}*/

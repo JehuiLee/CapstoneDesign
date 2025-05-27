@@ -1,4 +1,4 @@
-package com.example.CapstoneDesign.security.oauth2;
+/*package com.example.CapstoneDesign.security.oauth2;
 
 import com.example.CapstoneDesign.entity.UserEntity;
 import com.example.CapstoneDesign.repository.UserRepository;
@@ -57,4 +57,4 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
         new ObjectMapper().writeValue(response.getWriter(), tokenResponse);
     }
-}
+}*/
