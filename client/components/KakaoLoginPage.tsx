@@ -1,19 +1,33 @@
+import React from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import KakaoLogin from '@react-native-seoul/kakao-login';
-
-const handleKakaoLogin = async () => {
-  try {
-    const result = await KakaoLogin.login();
-    console.log('로그인 성공:', result);
-  } catch (error) {
-    console.error('로그인 실패:', error);
-  }
-};
+import axios from 'axios';
+import { useAuth } from '../contexts/useAuth'; // 로그인 상태 관리 훅 가져오기
 
 export default function KakaoLoginPage() {
-  const handleKakaoLogin = () => {
-    console.log('카카오 로그인 시도!');
-    Alert.alert('로그인 버튼 눌림', '카카오 로그인 시도');
+  const { login } = useAuth(); // login 함수 사용
+
+  const handleKakaoLogin = async () => {
+    try {
+      const result = await KakaoLogin.login();
+      console.log('로그인 성공:', result);
+
+      const accessToken = result.accessToken;
+
+      // 백엔드로 토큰 전송
+      const response = await axios.post('http://192.168.0.18:8080/auth/kakao-login', {
+        accessToken,
+      });
+
+      // 백엔드에서 응답받은 유저 정보 저장
+      const userData = response.data;
+      login(userData); // 전역 상태 저장
+
+      Alert.alert('로그인 완료', `${userData.nickname}님 환영합니다!`);
+    } catch (error) {
+      console.error('카카오 로그인 실패:', error);
+      Alert.alert('로그인 실패', error.message || '알 수 없는 에러');
+    }
   };
 
   return (
@@ -23,10 +37,10 @@ export default function KakaoLoginPage() {
       <View style={[styles.circle, styles.circle2]} />
       <View style={[styles.filledCircle, styles.filled1]} />
       <View style={[styles.filledCircle, styles.filled2]} />
-      
+
       {/* 텍스트 */}
       <Text style={styles.title}>AKA에 방문해주셔서{'\n'}감사합니다!</Text>
-      
+
       {/* 로그인 버튼 */}
       <TouchableOpacity style={styles.kakaoButton} onPress={handleKakaoLogin}>
         <Text style={styles.kakaoButtonText}>AKA로 입장하기</Text>
@@ -35,7 +49,6 @@ export default function KakaoLoginPage() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
