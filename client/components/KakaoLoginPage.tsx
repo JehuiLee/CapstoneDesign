@@ -1,4 +1,14 @@
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import KakaoLogin from '@react-native-seoul/kakao-login';
+
+const handleKakaoLogin = async () => {
+  try {
+    const result = await KakaoLogin.login();
+    console.log('로그인 성공:', result);
+  } catch (error) {
+    console.error('로그인 실패:', error);
+  }
+};
 
 export default function KakaoLoginPage() {
   const handleKakaoLogin = () => {
@@ -26,6 +36,7 @@ export default function KakaoLoginPage() {
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -41,7 +52,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     alignSelf: 'flex-start',
     marginBottom: 60,
-    marginTop: 50,
+    marginTop: 0,
   },
   kakaoButton: {
     backgroundColor: '#fff',
