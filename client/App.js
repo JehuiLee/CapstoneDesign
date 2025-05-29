@@ -1,6 +1,11 @@
 import React from 'react';
-import KakaoLoginPage from './components/KakaoLoginPage'; // 경로 확인
+import KakaoLoginPage from './components/KakaoLoginPage';
+import { AuthProvider } from './contexts/useAuth'; 
 
 export default function App() {
-  return <KakaoLoginPage />;
+  return (
+    <AuthProvider>
+      <KakaoLoginPage />
+    </AuthProvider>
+  );
 }
