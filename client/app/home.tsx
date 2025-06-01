@@ -1,24 +1,23 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useAuth } from '../contexts/useAuth'; // 파일 위치에 따라 경로 조정
 
-export default function HomeScreen() {
+export default function Home() {
   const router = useRouter();
-  const userName = "효원"; // 추후 로그인 유저 정보로 대체
+  const { user, isAuthenticated } = useAuth();
 
   return (
-    
     <View style={styles.container}>
-      {/* 앱 이름 */}
       <Text style={styles.logo}>AKA</Text>
 
-      {/* 인삿말 */}
       <View style={styles.welcomeBox}>
-        <Text style={styles.welcomeText}>{userName} 님</Text>
+      <Text style={styles.welcomeText}>
+        {isAuthenticated && user ? `${user.email} 님` : '방문자 님'}
+      </Text>
         <Text style={styles.welcomeBold}>환영합니다!</Text>
       </View>
 
-      {/* 메뉴 버튼들 */}
       <View style={styles.menuContainer}>
         <Pressable style={styles.menuButton} onPress={() => router.push('/mypage')}>
           <Text style={styles.menuText}>마이페이지</Text>
