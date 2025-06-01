@@ -2,20 +2,9 @@ import React from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import KakaoLogin from '@react-native-seoul/kakao-login';
 import axios from 'axios';
-import { useAuth } from '../../contexts/useAuth'; // 상대경로 수정
+import { useAuth } from '../contexts/useAuth'; // 상대경로 수정
 import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
-
-// // 백엔드와 연동되면 이 코드들 주석처리하고 진행하기 (_layout.tsx에도 주석할거있음 )
-// export default function HomeRedirect() {
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     router.replace('/mypage'); // 앱 켜자마자 /main으로 강제 이동
-//   }, []);
-
-//   return null; // 화면 안 보여줌
-// }
 
 export default function Index() {
   const { login } = useAuth();
@@ -36,7 +25,7 @@ export default function Index() {
       const userData = response.data;
       login(userData); // 전역 상태 저장
 
-      router.replace('/(tabs)'); // 메인 탭 화면으로 이동
+      router.replace('/(tabs)/home'); // 메인 탭 화면으로 이동
       Alert.alert('로그인 완료', `${userData.nickname}님 환영합니다!`);
     } catch (error) {
       console.error('카카오 로그인 실패:', error);

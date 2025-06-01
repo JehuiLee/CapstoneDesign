@@ -1,7 +1,9 @@
+// app/(tabs)/mypage.tsx
+
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useAuth } from '../../../contexts/useAuth'; // 경로는 상황에 맞게 조정
+import { useAuth } from '../../contexts/useAuth'; // 경로는 상황에 맞게 조정
 
 export default function MyPage() {
   const { logout, user } = useAuth();

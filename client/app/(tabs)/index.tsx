@@ -1,7 +1,7 @@
 // app/(tabs)/index.tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useAuth } from '../../../contexts/useAuth'; // 로그인 정보 불러오기
+import { useAuth } from '../../contexts/useAuth'; // 로그인 정보 불러오기
 
 export default function HomeScreen() {
   const { user } = useAuth();
