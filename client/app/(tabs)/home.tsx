@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useAuth } from '../contexts/useAuth'; // 파일 위치에 따라 경로 조정
+import { useAuth } from '../../contexts/useAuth'; // 파일 위치에 따라 경로 조정
 
 export default function Home() {
   const router = useRouter();
