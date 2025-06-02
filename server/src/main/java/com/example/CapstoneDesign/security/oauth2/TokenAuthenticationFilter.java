@@ -3,6 +3,9 @@ package com.example.CapstoneDesign.security.oauth2;
 import com.example.CapstoneDesign.config.AppProperties;
 import com.example.CapstoneDesign.entity.UserEntity;
 import com.example.CapstoneDesign.repository.UserRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,8 +35,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         String token = getJwtFromRequest(request);
 
-        if (token != null && tokenProvider.validateRefreshToken(token)) {
-            Long userId = tokenProvider.getUserIdFromRefreshToken(token);
+        if (token != null && tokenProvider.validateAccessToken(token)) {
+            Long userId = tokenProvider.getUserIdFromAccessToken(token);
 
             UserEntity user = userRepository.findById(userId).orElse(null);
             if (user != null) {
@@ -56,4 +59,5 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
         return null;
     }
+
 }
