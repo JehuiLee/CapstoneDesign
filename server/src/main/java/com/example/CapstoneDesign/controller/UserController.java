@@ -3,12 +3,14 @@ package com.example.CapstoneDesign.controller;
 import com.example.CapstoneDesign.dto.UserResponseDto;
 import com.example.CapstoneDesign.repository.UserRepository;
 import com.example.CapstoneDesign.security.oauth2.UserPrincipal;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@SecurityRequirement(name = "JWT")
 @RequiredArgsConstructor
 public class UserController {
 
