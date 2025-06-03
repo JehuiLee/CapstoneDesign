@@ -2,11 +2,12 @@ import React from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import KakaoLogin from '@react-native-seoul/kakao-login';
 import axios from 'axios';
-import { useAuth } from '../contexts/useAuth'; // 상대경로 수정
-import { useEffect } from 'react';
+import { useAuth } from '../contexts/useAuth';
 import { useRouter } from 'expo-router';
 
 export default function Index() {
+  console.log('✅ index.tsx 렌더링됨');
+  
   const { login } = useAuth();
   const router = useRouter();
 
@@ -15,36 +16,42 @@ export default function Index() {
       const result = await KakaoLogin.login();
       console.log('로그인 성공:', result);
 
-      const accessToken = result.accessToken;
+      // const accessToken = result.accessToken;
 
-      // 백엔드로 토큰 전송
-      const response = await axios.post('http://192.168.0.18:8080/auth/kakao-login', {
-        accessToken,
-      });
+      // const response = await axios.post('http://192.168.0.18:8080/auth/kakao-login', {
+      //   kakaoAccessToken: accessToken,
+      // });
 
-      const userData = response.data;
-      login(userData); // 전역 상태 저장
+      // const userData = response.data;
+      // login(userData);
 
-      router.replace('/(tabs)/home'); // 메인 탭 화면으로 이동
+      // ✅ 아래처럼 테스트용 유저 데이터 넣기
+      const userData = {
+      id: 1,
+      nickname: '테스트유저',
+      email: 'test@example.com',
+      };
+      login(userData);
+
+      router.replace('/(tabs)/home');
       Alert.alert('로그인 완료', `${userData.nickname}님 환영합니다!`);
     } catch (error) {
       console.error('카카오 로그인 실패:', error);
-      Alert.alert('로그인 실패', error.message || '알 수 없는 에러');
+      Alert.alert('로그인 실패', error?.message || '알 수 없는 에러');
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* 배경 도형 */}
       <View style={[styles.circle, styles.circle1]} />
       <View style={[styles.circle, styles.circle2]} />
       <View style={[styles.filledCircle, styles.filled1]} />
       <View style={[styles.filledCircle, styles.filled2]} />
 
-      {/* 텍스트 */}
-      <Text style={styles.title}>AKA에 방문해주셔서{'\n'}감사합니다!</Text>
+      <Text style={styles.title}>
+        AKA에 방문해주셔서{'\n'}감사합니다!
+      </Text>
 
-      {/* 로그인 버튼 */}
       <TouchableOpacity style={styles.kakaoButton} onPress={handleKakaoLogin}>
         <Text style={styles.kakaoButtonText}>AKA로 입장하기</Text>
         <Text style={styles.kakaoSubText}>for kakao</Text>

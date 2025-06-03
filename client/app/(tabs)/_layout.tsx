@@ -6,10 +6,10 @@ export default function TabLayout() {
     <Tabs
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: '#22C55E',         // 활성 상태 아이콘 색 (연한 초록색)
-        tabBarInactiveTintColor: '#111827',       // 비활성 상태 아이콘 색 (짙은 회색)
+        tabBarActiveTintColor: '#22C55E',
+        tabBarInactiveTintColor: '#111827',
         tabBarStyle: {
-          backgroundColor: '#ffffff',             // 탭바 배경색
+          backgroundColor: '#ffffff',
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
           height: 64,
@@ -32,24 +32,9 @@ export default function TabLayout() {
         },
       })}
     >
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: 'Home',
-        }}
-      />
-      <Tabs.Screen
-        name="map"
-        options={{
-          title: 'Map',
-        }}
-      />
-      <Tabs.Screen
-        name="cart"
-        options={{
-          title: 'Cart',
-        }}
-      />
+      <Tabs.Screen name="home" options={{ title: 'Home' }} />
+      <Tabs.Screen name="map" options={{ title: 'Map' }} />
+      <Tabs.Screen name="cart" options={{ title: 'Cart' }} />
     </Tabs>
   );
 }
