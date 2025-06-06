@@ -2,6 +2,7 @@ package com.example.CapstoneDesign.security.oauth2;
 
 import com.example.CapstoneDesign.config.AppProperties;
 import io.jsonwebtoken.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,21 +60,20 @@ public class TokenProvider {
         return Long.parseLong(claims.getSubject());
     }
 
-    public String refreshAccessToken(String refreshToken) {
-        try {
-            Claims claims = Jwts.parser()
-                    .setSigningKey(appProperties.getAuth().getRefreshTokenSecret())
-                    .parseClaimsJws(refreshToken)
-                    .getBody();
-
-            String subject = claims.getSubject();
-            Long userId = Long.parseLong(subject);
-            String newToken = createAccessToken(userId);
-            return newToken;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+    public String getJwtFromRequest(HttpServletRequest request) {
+        String bearer = request.getHeader("Authorization");
+        if (bearer != null && bearer.startsWith("Bearer ")) {
+            return bearer.substring(7); // "Bearer " 제외하고 토큰만 반환
         }
+        return null;
+    }
+
+    public Long getUserIdFromRequest(HttpServletRequest request) {
+        String token = getJwtFromRequest(request);
+        if (token == null || !validateAccessToken(token)) {
+            throw new IllegalArgumentException("유효하지 않은 또는 누락된 토큰입니다.");
+        }
+        return getUserIdFromAccessToken(token);
     }
 
     public boolean validateAccessToken(String token) {
@@ -94,4 +94,9 @@ public class TokenProvider {
                 .getBody();
         return Long.parseLong(claims.getSubject());
     }
+
+    public String getRefreshTokenFromRequest(HttpServletRequest request) {
+        return request.getHeader("X-Refresh-Token");
+    }
+
 }
