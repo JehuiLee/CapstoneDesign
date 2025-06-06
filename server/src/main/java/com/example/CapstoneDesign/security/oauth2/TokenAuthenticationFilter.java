@@ -22,13 +22,18 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
     private final UserRepository userRepository;
-    private final AppProperties appProperties;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
+
+        String path = request.getRequestURI();
+        if (path.startsWith("/api/auth") || path.startsWith("/swagger") || path.startsWith("/v3/api-docs")) {
+            filterChain.doFilter(request, response);  // 인증 필터 건너뜀
+            return;
+        }
 
         String token = getJwtFromRequest(request);
 

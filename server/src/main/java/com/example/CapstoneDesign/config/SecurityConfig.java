@@ -24,11 +24,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/swagger-ui/**",         // UI 정적 리소스
-                                "/swagger-resources/**",  // 리소스 경로
-                                "/v3/api-docs/**",        // OpenAPI 문서 경로
-                                "/webjars/**",            // swagger-ui에서 쓰는 정적 자원
-                                "/api/auth/**"            // 회원가입/로그인
+                                "/swagger-ui/**",
+                                "/swagger-resources/**",
+                                "/v3/api-docs/**",
+                                "/webjars/**",
+                                "/api/auth/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
