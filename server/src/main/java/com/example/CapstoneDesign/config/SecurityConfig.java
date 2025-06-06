@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -24,13 +24,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/",
-                                "/login**",
-                                "/oauth2/**",
-                                "/auth/kakao-login",
-                                "/auth/refresh-token",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**"
+                                "/swagger-ui/**",         // UI 정적 리소스
+                                "/swagger-resources/**",  // 리소스 경로
+                                "/v3/api-docs/**",        // OpenAPI 문서 경로
+                                "/webjars/**",            // swagger-ui에서 쓰는 정적 자원
+                                "/api/auth/**"            // 회원가입/로그인
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -40,6 +38,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance();
     }
 }
