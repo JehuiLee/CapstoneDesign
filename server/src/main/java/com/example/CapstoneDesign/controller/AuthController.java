@@ -50,10 +50,8 @@ public class AuthController {
     @PostMapping("/refresh-token")
     public ResponseEntity<?> refresh(HttpServletRequest request) {
         String refreshToken = tokenProvider.getRefreshTokenFromRequest(request);
-        System.out.println(">>> 요청받은 refreshToken: " + refreshToken);
 
         if (!tokenProvider.validateRefreshToken(refreshToken)) {
-            System.out.println(">>> refreshToken 유효성 실패");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("유효하지 않은 리프레시 토큰");
         }
 
