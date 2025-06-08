@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "1.0.0",
-  "main": "expo-router/entry",
+  "main": "node_modules/expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -9,13 +9,15 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/config-plugins": "~10.0.0",
     "@expo/metro-runtime": "~5.0.4",
-    "@react-native-seoul/kakao-login": "^5.4.1",
+    "@expo/prebuild-config": "~9.0.0",
     "@react-navigation/bottom-tabs": "^7.3.14",
     "@react-navigation/native": "^7.1.10",
     "axios": "^1.9.0",
     "eas-cli": "^16.7.0",
     "expo": "~53.0.9",
+    "expo-dev-client": "~5.1.8",
     "expo-router": "^5.0.7",
     "expo-secure-store": "~14.2.3",
     "expo-status-bar": "~2.2.3",
@@ -25,8 +27,7 @@
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
     "react-native-vector-icons": "^10.2.0",
-    "react-native-web": "^0.20.0",
-    "expo-dev-client": "~5.1.8"
+    "react-native-web": "^0.20.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
