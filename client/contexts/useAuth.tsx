@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { logout as logoutApi } from '../api/auth'; // 백엔드 로그아웃 함수 가져오기
+import { getMyInfo, logout as logoutApi } from '../api/auth'; // 백엔드 로그아웃 함수 가져오기
 
 interface User {
   id: number;
@@ -19,6 +19,22 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+
+  // 자동 로그인
+  useEffect(() => {
+    const loadUser = async () => {
+      const token = await AsyncStorage.getItem('accessToken');
+      if (token) {
+        try {
+          const userInfo = await getMyInfo(); // 토큰이 유효하면 유저 정보 받아옴
+          setUser(userInfo);
+        } catch (e) {
+          console.log('자동 로그인 실패', e);
+        }
+      }
+    };
+    loadUser();
+  }, []);
 
   const login = (userData: User) => setUser(userData);
 

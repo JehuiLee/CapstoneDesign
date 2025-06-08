@@ -12,6 +12,7 @@ import {
 import { useRouter } from 'expo-router';
 import { login, signup } from '../api/auth';
 import { useAuth } from '../contexts/useAuth';
+import { Alert } from 'react-native';
 
 const CheckBox = Platform.OS === 'web'
   ? ({ value, onValueChange }: any) => (
@@ -49,8 +50,9 @@ const { login: setUser } = useAuth();
       const userData = await login({ email: loginEmail, password: loginPassword });
       setUser(userData); // 👈 로그인 성공 후 context에 유저 정보 저장
       router.replace('/home'); // 홈으로 이동
-    } catch (e) {
-      setError('로그인 실패: 이메일/비밀번호 확인');
+    } catch (error: any) {
+    const message = error.message || '로그인 중 오류가 발생했습니다.';
+    Alert.alert('로그인 실패', message); 
     }
   };
 

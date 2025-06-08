@@ -19,6 +19,7 @@ export default function Index() {
 
       <Text style={styles.title}>
         AKA에 방문해주셔서{'\n'}감사합니다!
+        {/* {user ? `${user.nickname}님, 환영합니다!` : 'AKA에 방문해주셔서 감사합니다!'} */}
       </Text>
 
       <TouchableOpacity
@@ -26,7 +27,7 @@ export default function Index() {
         onPress={() => router.push('/login')}
       >
         <Text style={styles.loginButtonText}>AKA로 입장하기</Text>
-        <Text style={styles.loginSubText}>for kakao</Text>
+        <Text style={styles.loginSubText}>로그인/회원가입</Text>
       </TouchableOpacity>
     </View>
   );
