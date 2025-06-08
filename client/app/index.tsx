@@ -1,13 +1,13 @@
 import React from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import axios from 'axios';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../contexts/useAuth';
 import { useRouter } from 'expo-router';
 
 export default function Index() {
   console.log('✅ index.tsx 렌더링됨');
 
-  const auth = useAuth(); // 전체 context 객체로 받아옴
+  const { user } = useAuth();
+  // const auth = useAuth(); // 전체 context 객체로 받아옴
   const router = useRouter();
 
   return (
@@ -21,9 +21,12 @@ export default function Index() {
         AKA에 방문해주셔서{'\n'}감사합니다!
       </Text>
 
-      <TouchableOpacity style={styles.kakaoButton} >
-        <Text style={styles.kakaoButtonText}>AKA로 입장하기</Text>
-        <Text style={styles.kakaoSubText}>for kakao</Text>
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => router.push('/login')}
+      >
+        <Text style={styles.loginButtonText}>AKA로 입장하기</Text>
+        <Text style={styles.loginSubText}>for kakao</Text>
       </TouchableOpacity>
     </View>
   );
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginBottom: 60,
   },
-  kakaoButton: {
+  loginButton: {
     backgroundColor: '#fff',
     borderRadius: 16,
     borderWidth: 1,
@@ -56,12 +59,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 50,
   },
-  kakaoButtonText: {
+  loginButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
   },
-  kakaoSubText: {
+  loginSubText: {
     fontSize: 10,
     color: '#555',
     marginTop: 4,
