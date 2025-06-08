@@ -12,6 +12,8 @@
     "@expo/config-plugins": "~10.0.0",
     "@expo/metro-runtime": "~5.0.4",
     "@expo/prebuild-config": "~9.0.0",
+    "@react-native-async-storage/async-storage": "2.1.2",
+    "@react-native-community/checkbox": "^0.5.20",
     "@react-navigation/bottom-tabs": "^7.3.14",
     "@react-navigation/native": "^7.1.10",
     "axios": "^1.9.0",
