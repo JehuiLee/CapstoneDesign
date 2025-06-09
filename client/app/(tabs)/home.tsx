@@ -13,7 +13,7 @@ export default function Home() {
 
       <View style={styles.welcomeBox}>
       <Text style={styles.welcomeText}>
-        {isAuthenticated && user ? `${user.email} 님` : '방문자 님'}
+        {isAuthenticated && user ? `${user.nickname} 님` : '방문자 님'}
       </Text>
         <Text style={styles.welcomeBold}>환영합니다!</Text>
       </View>

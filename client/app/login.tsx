@@ -70,11 +70,25 @@ const { login: setUser } = useAuth();
 
 
     try {
-      await signup({ email: signupEmail, password: signupPassword, name: nickname, userId: signupEmail });
-      router.replace('/home');
-    } catch (e) {
-      setError('회원가입 실패');
-    }
+        const userInfo = await signup({
+          email: signupEmail,
+          password: signupPassword,
+          name: nickname,
+          userId: signupEmail,
+        });
+        console.log('✅ 회원가입 성공:', userInfo);
+
+        setUser(userInfo); // ✅ 이 줄을 추가해야 홈에서 닉네임이 뜸
+        console.log('✅ setUser 완료');
+
+        router.replace('/home');
+        console.log('✅ 홈으로 이동 완료');
+
+      } catch (e) {
+        console.error('❌ 회원가입 오류:', e);
+        Alert.alert('회원가입 실패', e?.message || '문제가 발생했습니다.');
+         setError(e?.message || '회원가입 실패');
+      }
   };
 
   return (
