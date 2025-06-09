@@ -13,7 +13,7 @@ public class WebMvcConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("*")
+                        .allowedOrigins("http://192.168.0.47:8081")
                         .allowedMethods("*")
                         .allowedHeaders("*");
             }

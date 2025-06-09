@@ -21,10 +21,15 @@ public class AuthController {
 
     //회원가입
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody SignupRequestDto request) {
-        authService.signup(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body("회원가입 성공");
+    public ResponseEntity<TokenResponseDto> signup(@RequestBody SignupRequestDto request) {
+        authService.signup(request); // 유저 생성
+        TokenResponseDto token = authService.login(
+                new LoginRequestDto(request.getEmail(), request.getPassword())
+        );
+
+        return ResponseEntity.ok(token);
     }
+
 
     //로그인
     @PostMapping("/login")
